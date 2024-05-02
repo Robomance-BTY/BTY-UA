@@ -1,0 +1,515 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FD0632C92BD6E9BB0098FABC /* HomeBookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0632C82BD6E9BB0098FABC /* HomeBookCollectionViewCell.swift */; };
+		FD0632CB2BD704B10098FABC /* TitleCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0632CA2BD704B10098FABC /* TitleCollectionReusableView.swift */; };
+		FD0F70EF2BE0E082008804AA /* BookSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0F70EE2BE0E082008804AA /* BookSeriesView.swift */; };
+		FD0F70F12BE0E24E008804AA /* BookSeriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0F70F02BE0E24E008804AA /* BookSeriesCollectionViewCell.swift */; };
+		FD1A009B2BDFD02800A599EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1A009A2BDFD02700A599EC /* LoginViewController.swift */; };
+		FD6176EB2BDA375600F6B724 /* OrderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6176EA2BDA375600F6B724 /* OrderCollectionViewCell.swift */; };
+		FD6176ED2BDA3A0200F6B724 /* OrderStuffController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6176EC2BDA3A0200F6B724 /* OrderStuffController.swift */; };
+		FD6176EF2BDA414B00F6B724 /* OrderStuffNumberManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6176EE2BDA414B00F6B724 /* OrderStuffNumberManager.swift */; };
+		FD6176F12BDA594F00F6B724 /* DetailOrderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6176F02BDA594F00F6B724 /* DetailOrderView.swift */; };
+		FD6176F32BDA5ED500F6B724 /* DetailOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6176F22BDA5ED500F6B724 /* DetailOrderViewController.swift */; };
+		FD6176F52BDAE7CA00F6B724 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6176F42BDAE7CA00F6B724 /* MenuView.swift */; };
+		FD9087D22BCE151900D4305A /* DetailBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9087D12BCE151900D4305A /* DetailBookViewController.swift */; };
+		FD9087D42BCE152C00D4305A /* DetailBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD9087D32BCE152C00D4305A /* DetailBookView.swift */; };
+		FDA1F7AE2BCE00BB008D07FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7AD2BCE00BB008D07FF /* AppDelegate.swift */; };
+		FDA1F7B02BCE00BB008D07FF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7AF2BCE00BB008D07FF /* SceneDelegate.swift */; };
+		FDA1F7B22BCE00BB008D07FF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7B12BCE00BB008D07FF /* HomeViewController.swift */; };
+		FDA1F7B72BCE00BD008D07FF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FDA1F7B62BCE00BD008D07FF /* Assets.xcassets */; };
+		FDA1F7BA2BCE00BD008D07FF /* Base in Resources */ = {isa = PBXBuildFile; fileRef = FDA1F7B92BCE00BD008D07FF /* Base */; };
+		FDA1F7C72BCE0149008D07FF /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7C62BCE0149008D07FF /* SearchViewController.swift */; };
+		FDA1F7C92BCE0151008D07FF /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7C82BCE0151008D07FF /* MyViewController.swift */; };
+		FDA1F7CB2BCE0157008D07FF /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7CA2BCE0157008D07FF /* OrderViewController.swift */; };
+		FDA1F7CD2BCE015B008D07FF /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7CC2BCE015B008D07FF /* MenuViewController.swift */; };
+		FDA1F7D02BCE01C3008D07FF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FDA1F7CF2BCE01C3008D07FF /* SnapKit */; };
+		FDA1F7D42BCE0321008D07FF /* BTYTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7D32BCE0321008D07FF /* BTYTabBarController.swift */; };
+		FDA1F7D62BCE0895008D07FF /* BookInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7D52BCE0895008D07FF /* BookInformation.swift */; };
+		FDA1F7D82BCE0911008D07FF /* CurrentBookNumberManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7D72BCE0911008D07FF /* CurrentBookNumberManager.swift */; };
+		FDA1F7DA2BCE099B008D07FF /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7D92BCE099B008D07FF /* MyView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FD0632C82BD6E9BB0098FABC /* HomeBookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBookCollectionViewCell.swift; sourceTree = "<group>"; };
+		FD0632CA2BD704B10098FABC /* TitleCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionReusableView.swift; sourceTree = "<group>"; };
+		FD0F70EE2BE0E082008804AA /* BookSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSeriesView.swift; sourceTree = "<group>"; };
+		FD0F70F02BE0E24E008804AA /* BookSeriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSeriesCollectionViewCell.swift; sourceTree = "<group>"; };
+		FD1A009A2BDFD02700A599EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		FD6176EA2BDA375600F6B724 /* OrderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCollectionViewCell.swift; sourceTree = "<group>"; };
+		FD6176EC2BDA3A0200F6B724 /* OrderStuffController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStuffController.swift; sourceTree = "<group>"; };
+		FD6176EE2BDA414B00F6B724 /* OrderStuffNumberManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStuffNumberManager.swift; sourceTree = "<group>"; };
+		FD6176F02BDA594F00F6B724 /* DetailOrderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderView.swift; sourceTree = "<group>"; };
+		FD6176F22BDA5ED500F6B724 /* DetailOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailOrderViewController.swift; sourceTree = "<group>"; };
+		FD6176F42BDAE7CA00F6B724 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		FD9087D12BCE151900D4305A /* DetailBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBookViewController.swift; sourceTree = "<group>"; };
+		FD9087D32BCE152C00D4305A /* DetailBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBookView.swift; sourceTree = "<group>"; };
+		FDA1F7AA2BCE00BB008D07FF /* BookToYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookToYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FDA1F7AD2BCE00BB008D07FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FDA1F7AF2BCE00BB008D07FF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		FDA1F7B12BCE00BB008D07FF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		FDA1F7B62BCE00BD008D07FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FDA1F7B92BCE00BD008D07FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FDA1F7BB2BCE00BD008D07FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FDA1F7C62BCE0149008D07FF /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		FDA1F7C82BCE0151008D07FF /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
+		FDA1F7CA2BCE0157008D07FF /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
+		FDA1F7CC2BCE015B008D07FF /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		FDA1F7D32BCE0321008D07FF /* BTYTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BTYTabBarController.swift; sourceTree = "<group>"; };
+		FDA1F7D52BCE0895008D07FF /* BookInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookInformation.swift; sourceTree = "<group>"; };
+		FDA1F7D72BCE0911008D07FF /* CurrentBookNumberManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentBookNumberManager.swift; sourceTree = "<group>"; };
+		FDA1F7D92BCE099B008D07FF /* MyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FDA1F7A72BCE00BB008D07FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA1F7D02BCE01C3008D07FF /* SnapKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FDA1F7A12BCE00BB008D07FF = {
+			isa = PBXGroup;
+			children = (
+				FDA1F7AC2BCE00BB008D07FF /* BookToYou */,
+				FDA1F7AB2BCE00BB008D07FF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FDA1F7AB2BCE00BB008D07FF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FDA1F7AA2BCE00BB008D07FF /* BookToYou.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FDA1F7AC2BCE00BB008D07FF /* BookToYou */ = {
+			isa = PBXGroup;
+			children = (
+				FDA1F7C42BCE0124008D07FF /* System */,
+				FDA1F7C32BCE0120008D07FF /* Model */,
+				FDA1F7C22BCE011D008D07FF /* View */,
+				FDA1F7C12BCE010E008D07FF /* ViewController */,
+				FDA1F7C52BCE0129008D07FF /* TabBarController */,
+				FDA1F7B62BCE00BD008D07FF /* Assets.xcassets */,
+				FDA1F7B82BCE00BD008D07FF /* LaunchScreen.storyboard */,
+				FDA1F7BB2BCE00BD008D07FF /* Info.plist */,
+			);
+			path = BookToYou;
+			sourceTree = "<group>";
+		};
+		FDA1F7C12BCE010E008D07FF /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FD1A009A2BDFD02700A599EC /* LoginViewController.swift */,
+				FDA1F7CA2BCE0157008D07FF /* OrderViewController.swift */,
+				FDA1F7C62BCE0149008D07FF /* SearchViewController.swift */,
+				FDA1F7B12BCE00BB008D07FF /* HomeViewController.swift */,
+				FDA1F7C82BCE0151008D07FF /* MyViewController.swift */,
+				FDA1F7CC2BCE015B008D07FF /* MenuViewController.swift */,
+				FD9087D12BCE151900D4305A /* DetailBookViewController.swift */,
+				FD6176F22BDA5ED500F6B724 /* DetailOrderViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		FDA1F7C22BCE011D008D07FF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FD6176EA2BDA375600F6B724 /* OrderCollectionViewCell.swift */,
+				FD0632C82BD6E9BB0098FABC /* HomeBookCollectionViewCell.swift */,
+				FD9087D32BCE152C00D4305A /* DetailBookView.swift */,
+				FD6176F02BDA594F00F6B724 /* DetailOrderView.swift */,
+				FD0F70EE2BE0E082008804AA /* BookSeriesView.swift */,
+				FD0F70F02BE0E24E008804AA /* BookSeriesCollectionViewCell.swift */,
+				FDA1F7D92BCE099B008D07FF /* MyView.swift */,
+				FD6176F42BDAE7CA00F6B724 /* MenuView.swift */,
+				FD0632CA2BD704B10098FABC /* TitleCollectionReusableView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		FDA1F7C32BCE0120008D07FF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FDA1F7D52BCE0895008D07FF /* BookInformation.swift */,
+				FDA1F7D72BCE0911008D07FF /* CurrentBookNumberManager.swift */,
+				FD6176EC2BDA3A0200F6B724 /* OrderStuffController.swift */,
+				FD6176EE2BDA414B00F6B724 /* OrderStuffNumberManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FDA1F7C42BCE0124008D07FF /* System */ = {
+			isa = PBXGroup;
+			children = (
+				FDA1F7AD2BCE00BB008D07FF /* AppDelegate.swift */,
+				FDA1F7AF2BCE00BB008D07FF /* SceneDelegate.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		FDA1F7C52BCE0129008D07FF /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				FDA1F7D32BCE0321008D07FF /* BTYTabBarController.swift */,
+			);
+			path = TabBarController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FDA1F7A92BCE00BB008D07FF /* BookToYou */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FDA1F7BE2BCE00BD008D07FF /* Build configuration list for PBXNativeTarget "BookToYou" */;
+			buildPhases = (
+				FDA1F7A62BCE00BB008D07FF /* Sources */,
+				FDA1F7A72BCE00BB008D07FF /* Frameworks */,
+				FDA1F7A82BCE00BB008D07FF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BookToYou;
+			packageProductDependencies = (
+				FDA1F7CF2BCE01C3008D07FF /* SnapKit */,
+			);
+			productName = BookToYou;
+			productReference = FDA1F7AA2BCE00BB008D07FF /* BookToYou.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FDA1F7A22BCE00BB008D07FF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					FDA1F7A92BCE00BB008D07FF = {
+						CreatedOnToolsVersion = 15.3;
+					};
+				};
+			};
+			buildConfigurationList = FDA1F7A52BCE00BB008D07FF /* Build configuration list for PBXProject "BookToYou" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FDA1F7A12BCE00BB008D07FF;
+			packageReferences = (
+				FDA1F7CE2BCE01C3008D07FF /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
+			productRefGroup = FDA1F7AB2BCE00BB008D07FF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FDA1F7A92BCE00BB008D07FF /* BookToYou */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FDA1F7A82BCE00BB008D07FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA1F7B72BCE00BD008D07FF /* Assets.xcassets in Resources */,
+				FDA1F7BA2BCE00BD008D07FF /* Base in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FDA1F7A62BCE00BB008D07FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FDA1F7B22BCE00BB008D07FF /* HomeViewController.swift in Sources */,
+				FDA1F7AE2BCE00BB008D07FF /* AppDelegate.swift in Sources */,
+				FD0F70F12BE0E24E008804AA /* BookSeriesCollectionViewCell.swift in Sources */,
+				FD9087D22BCE151900D4305A /* DetailBookViewController.swift in Sources */,
+				FDA1F7DA2BCE099B008D07FF /* MyView.swift in Sources */,
+				FDA1F7C72BCE0149008D07FF /* SearchViewController.swift in Sources */,
+				FD0632CB2BD704B10098FABC /* TitleCollectionReusableView.swift in Sources */,
+				FDA1F7D42BCE0321008D07FF /* BTYTabBarController.swift in Sources */,
+				FD6176F52BDAE7CA00F6B724 /* MenuView.swift in Sources */,
+				FDA1F7CD2BCE015B008D07FF /* MenuViewController.swift in Sources */,
+				FD6176F32BDA5ED500F6B724 /* DetailOrderViewController.swift in Sources */,
+				FD1A009B2BDFD02800A599EC /* LoginViewController.swift in Sources */,
+				FDA1F7C92BCE0151008D07FF /* MyViewController.swift in Sources */,
+				FDA1F7B02BCE00BB008D07FF /* SceneDelegate.swift in Sources */,
+				FDA1F7CB2BCE0157008D07FF /* OrderViewController.swift in Sources */,
+				FD6176EB2BDA375600F6B724 /* OrderCollectionViewCell.swift in Sources */,
+				FD6176EF2BDA414B00F6B724 /* OrderStuffNumberManager.swift in Sources */,
+				FD6176ED2BDA3A0200F6B724 /* OrderStuffController.swift in Sources */,
+				FDA1F7D62BCE0895008D07FF /* BookInformation.swift in Sources */,
+				FD6176F12BDA594F00F6B724 /* DetailOrderView.swift in Sources */,
+				FD0F70EF2BE0E082008804AA /* BookSeriesView.swift in Sources */,
+				FD0632C92BD6E9BB0098FABC /* HomeBookCollectionViewCell.swift in Sources */,
+				FDA1F7D82BCE0911008D07FF /* CurrentBookNumberManager.swift in Sources */,
+				FD9087D42BCE152C00D4305A /* DetailBookView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FDA1F7B82BCE00BD008D07FF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDA1F7B92BCE00BD008D07FF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FDA1F7BC2BCE00BD008D07FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FDA1F7BD2BCE00BD008D07FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FDA1F7BF2BCE00BD008D07FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8RN9H3Z673;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BookToYou/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "북투유";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = HIGHSOUL.BookToYou;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		FDA1F7C02BCE00BD008D07FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8RN9H3Z673;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BookToYou/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "북투유";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = HIGHSOUL.BookToYou;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FDA1F7A52BCE00BB008D07FF /* Build configuration list for PBXProject "BookToYou" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDA1F7BC2BCE00BD008D07FF /* Debug */,
+				FDA1F7BD2BCE00BD008D07FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FDA1F7BE2BCE00BD008D07FF /* Build configuration list for PBXNativeTarget "BookToYou" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FDA1F7BF2BCE00BD008D07FF /* Debug */,
+				FDA1F7C02BCE00BD008D07FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FDA1F7CE2BCE01C3008D07FF /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FDA1F7CF2BCE01C3008D07FF /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDA1F7CE2BCE01C3008D07FF /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = FDA1F7A22BCE00BB008D07FF /* Project object */;
+}
