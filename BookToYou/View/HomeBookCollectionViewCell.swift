@@ -11,9 +11,9 @@ class HomeBookCollectionViewCell: UICollectionViewCell {
     
     static let reuseIdentifier: String = "bookCollectionViewCell"
     
-    let imageBackground: UIView = UIView()
-    let imageView: UIImageView = UIImageView()
-    let title: UILabel = UILabel()
+    var imageBackground: UIView = UIView()
+    var imageView: UIImageView = UIImageView()
+    var title: UILabel = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

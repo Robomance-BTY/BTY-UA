@@ -79,8 +79,8 @@ extension LoginViewController {
     @objc private func loginButtonClicked() {
         if loginTextField.text == "1" {
             let mainViewController = BTYTabBarController()
-            self.navigationController?.pushViewController(mainViewController, animated: true)
-            self.navigationItem.setHidesBackButton(true, animated: false)
+            mainViewController.modalPresentationStyle = .overFullScreen
+            self.present(mainViewController, animated: true, completion: nil)
         } else {
             let notCorrectLoginIDAlert = UIAlertController(title: "코드가 틀립니다", message: "지정된 코드가 아닙니다.\n다시 입력해주세요", preferredStyle: .alert)
             notCorrectLoginIDAlert.addAction(UIAlertAction(title: "확인", style: .default))

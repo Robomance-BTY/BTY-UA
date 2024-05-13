@@ -18,6 +18,7 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tabBarController?.selectedIndex = 2
         configureLayout()
     }
 }
@@ -35,7 +36,7 @@ extension MenuViewController {
         
         setComponents()
         setToday()
-//        menuView.logOutButton.addTarget(self, action: #selector(logOutButtonClicked), for: .touchUpInside)
+        menuView.logOutButton.addTarget(self, action: #selector(logOutButtonClicked), for: .touchUpInside)
     }
 }
 
@@ -79,17 +80,20 @@ extension MenuViewController {
     @objc private func logOutButtonClicked() {
         let logOutAlert = UIAlertController(title: "로그아웃하시겠습니까?", message: "로그아웃을 하시려면 '확인'를 눌러주세요", preferredStyle: .alert)
         logOutAlert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { action in
-            self.userTimer?.invalidate()
-            
-            let loginViewController = LoginViewController()
-            let navigationViewController = UINavigationController(rootViewController: loginViewController)
-            
-            BTYTabBarController.shared.setViewControllers([navigationViewController], animated: false)
-            BTYTabBarController.shared.selectedViewController = navigationViewController
+            self.logOut()
         }))
         logOutAlert.addAction(UIAlertAction(title: "취소", style: .default))
         
         self.present(logOutAlert, animated: true, completion: nil)
     }
+    
+    private func logOut() {
+        let loginViewController = LoginViewController()
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            if let window = windowScene.windows.first {
+                window.rootViewController = loginViewController
+            }
+        }
+    }
 }
-//

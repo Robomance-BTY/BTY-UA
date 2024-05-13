@@ -11,6 +11,7 @@
 		FD0632CB2BD704B10098FABC /* TitleCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0632CA2BD704B10098FABC /* TitleCollectionReusableView.swift */; };
 		FD0F70EF2BE0E082008804AA /* BookSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0F70EE2BE0E082008804AA /* BookSeriesView.swift */; };
 		FD0F70F12BE0E24E008804AA /* BookSeriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD0F70F02BE0E24E008804AA /* BookSeriesCollectionViewCell.swift */; };
+		FD15C1932BF25FB80010CEF9 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD15C1922BF25FB80010CEF9 /* APIManager.swift */; };
 		FD1A009B2BDFD02800A599EC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1A009A2BDFD02700A599EC /* LoginViewController.swift */; };
 		FD6176EB2BDA375600F6B724 /* OrderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6176EA2BDA375600F6B724 /* OrderCollectionViewCell.swift */; };
 		FD6176ED2BDA3A0200F6B724 /* OrderStuffController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD6176EC2BDA3A0200F6B724 /* OrderStuffController.swift */; };
@@ -41,6 +42,7 @@
 		FD0632CA2BD704B10098FABC /* TitleCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionReusableView.swift; sourceTree = "<group>"; };
 		FD0F70EE2BE0E082008804AA /* BookSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSeriesView.swift; sourceTree = "<group>"; };
 		FD0F70F02BE0E24E008804AA /* BookSeriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSeriesCollectionViewCell.swift; sourceTree = "<group>"; };
+		FD15C1922BF25FB80010CEF9 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		FD1A009A2BDFD02700A599EC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FD6176EA2BDA375600F6B724 /* OrderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderCollectionViewCell.swift; sourceTree = "<group>"; };
 		FD6176EC2BDA3A0200F6B724 /* OrderStuffController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStuffController.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		FDA1F7C32BCE0120008D07FF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FD15C1922BF25FB80010CEF9 /* APIManager.swift */,
 				FDA1F7D52BCE0895008D07FF /* BookInformation.swift */,
 				FDA1F7D72BCE0911008D07FF /* CurrentBookNumberManager.swift */,
 				FD6176EC2BDA3A0200F6B724 /* OrderStuffController.swift */,
@@ -267,6 +270,7 @@
 				FD6176F12BDA594F00F6B724 /* DetailOrderView.swift in Sources */,
 				FD0F70EF2BE0E082008804AA /* BookSeriesView.swift in Sources */,
 				FD0632C92BD6E9BB0098FABC /* HomeBookCollectionViewCell.swift in Sources */,
+				FD15C1932BF25FB80010CEF9 /* APIManager.swift in Sources */,
 				FDA1F7D82BCE0911008D07FF /* CurrentBookNumberManager.swift in Sources */,
 				FD9087D42BCE152C00D4305A /* DetailBookView.swift in Sources */,
 			);

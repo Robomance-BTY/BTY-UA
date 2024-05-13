@@ -11,7 +11,6 @@ import SnapKit
 class DetailBookView: UIView {
     let bookImageView: UIImageView = UIImageView()
     let bookTitle: UILabel = UILabel()
-    let scrollView: UIScrollView = UIScrollView()
     let bookDescription: UILabel = UILabel()
     let author: UILabel = UILabel()
     let genre: UILabel = UILabel()
@@ -41,9 +40,7 @@ extension DetailBookView {
         bookImageView.layer.borderWidth = 1
         bookImageView.layer.borderColor = UIColor.black.cgColor
         
-        self.addSubview(scrollView)
-        scrollView.addSubview(bookDescription)
-        let labels = [bookTitle, author, genre, country, publishedDate]
+        let labels = [bookTitle, author, genre, country, bookDescription, publishedDate]
         labels.forEach { label in
             self.addSubview(label)
             
@@ -53,7 +50,7 @@ extension DetailBookView {
         
         bookImageView.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().offset(10)
-            make.width.equalTo(self.snp.width).multipliedBy(0.17)
+            make.width.equalTo(self.snp.width).multipliedBy(0.2)
             make.bottom.equalToSuperview().offset(-10)
         }
         
@@ -87,26 +84,23 @@ extension DetailBookView {
         }
         publishedDate.font = UIFont.systemFont(ofSize: 20)
         
-        scrollView.snp.makeConstraints { make in
+        bookDescription.snp.makeConstraints { make in
             make.top.equalTo(publishedDate.snp.bottom).offset(20)
             make.leading.equalTo(bookImageView.snp.trailing).offset(20)
             make.trailing.equalToSuperview().offset(-30)
         }
-        
-        bookDescription.snp.makeConstraints { make in
-            make.top.leading.trailing.bottom.equalToSuperview()
-        }
         bookDescription.textColor = .black
         bookDescription.font = UIFont.systemFont(ofSize: 17)
         bookDescription.textAlignment = .left
-        bookDescription.numberOfLines = 0
+        bookDescription.numberOfLines = 8
 
         
         setComponents()
     }
     
     private func setComponents() {
-        let currentBookInfo = allBookList[CurrentBookNumberManager.shared.getCurrentBookNumber()]
+        let index = AllBookList.shared.allBookList.firstIndex { $0.bookId == CurrentBookNumberManager.shared.getCurrentBookNumber() } ?? 0
+        let currentBookInfo = AllBookList.shared.allBookList[index]
         
         bookImageView.image = UIImage(named: currentBookInfo.imageName)
         bookTitle.text = currentBookInfo.title

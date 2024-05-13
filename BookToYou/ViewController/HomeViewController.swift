@@ -105,13 +105,14 @@ extension HomeViewController {
 
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("------------------------------------------------------------")
         if let selectedStuff = dataSource.itemIdentifier(for: indexPath) {
             let selectedStuffNumber = selectedStuff.bookId
-            CurrentBookNumberManager.shared.writeCurrentBookNumber(Int(selectedStuffNumber))
+            print("HomeViewControllerDidSelectItemAt: \(selectedStuffNumber)")
+            CurrentBookNumberManager.shared.writeCurrentBookNumber(selectedStuffNumber)
         }
-        
+        print("------------------------------------------------------------")
         let bookDetailViewController = DetailBookViewController()
-        
         navigationController?.pushViewController(bookDetailViewController, animated: true)
     }
 }

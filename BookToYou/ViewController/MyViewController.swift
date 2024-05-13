@@ -11,10 +11,14 @@ import SnapKit
 class MyViewController: UIViewController {
     static let shared = MyViewController()
     
-    let myView: MyView = MyView()
+    var borrowedInformation1: BookInfo?
+    var borrowedInformation2: BookInfo?
+    var borrowedInformation3: BookInfo?
+    var reservationInformation1: BookInfo?
+    var reservationInformation2: BookInfo?
+    var reservationInformation3: BookInfo?
     
-    var borrowedBooksList: [Int : BookInfo] = [:]
-    var nextWillBorrowBooksList: [Int : BookInfo] = [:]
+    let myView: MyView = MyView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +55,8 @@ extension MyViewController {
 
 extension MyViewController {
     @objc private func borrowed1Clicked() {
-        if checkBookExisted(0) == false {
+        print("Borrowed1 button clicked")
+        if checkBorrowedBookExisted(0) == true {
             moveToDetailView(0)
         } else {
             moveToHomeView()
@@ -59,7 +64,8 @@ extension MyViewController {
     }
     
     @objc private func borrowed2Clicked() {
-        if checkBookExisted(1) == false {
+        print("Borrowed2 button clicked")
+        if checkBorrowedBookExisted(1) == true {
             moveToDetailView(1)
         } else {
             moveToHomeView()
@@ -67,7 +73,8 @@ extension MyViewController {
     }
     
     @objc private func borrowed3Clicked() {
-        if checkBookExisted(2) == false {
+        print("Borrowed3 button clicked")
+        if checkBorrowedBookExisted(2) == true {
             moveToDetailView(2)
         } else {
             moveToHomeView()
@@ -75,7 +82,8 @@ extension MyViewController {
     }
     
     @objc private func willBorrow1Clicked() {
-        if checkBookExisted(3) == false {
+        print("Will borrow1 button clicked")
+        if checkWillBorrowBookExisted(0) == true {
             moveToDetailView(3)
         } else {
             moveToHomeView()
@@ -83,7 +91,8 @@ extension MyViewController {
     }
     
     @objc private func willBorrow2Clicked() {
-        if checkBookExisted(4) == false {
+        print("Will borrow2 button clicked")
+        if checkWillBorrowBookExisted(1) == true {
             moveToDetailView(4)
         } else {
             moveToHomeView()
@@ -91,7 +100,8 @@ extension MyViewController {
     }
     
     @objc private func willBorrow3Clicked() {
-        if checkBookExisted(5) == false {
+        print("Will borrow3 button clicked")
+        if checkWillBorrowBookExisted(2) == true {
             moveToDetailView(5)
         } else {
             moveToHomeView()
@@ -100,152 +110,157 @@ extension MyViewController {
 }
 
 extension MyViewController {
-    func checkBookExisted(_ number: Int) -> Bool {
-        switch(number) {
+    func checkBorrowedBookExisted(_ number: Int) -> Bool {
+        print("CheckBorrowedBookExisted")
+        print("Selected button ->> \(number)")
+        
+        let currentBorrowed = CurrentBookNumberManager.shared.getCurrentBorrowedList()
+        print("currentBorrowed.count: \(currentBorrowed.count)")
+        if number == 0 {
+            if currentBorrowed.count > 0 {
+                return true
+            } else {
+                return false
+            }
+        } else if number == 1 {
+            if currentBorrowed.count > 1 {
+                return true
+            } else {
+                return false
+            }
+        } else if number == 2 {
+            if currentBorrowed.count > 2 {
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
+    }
+    
+    func checkWillBorrowBookExisted(_ number: Int) -> Bool {
+        print("CheckWillBorrowBookExisted")
+        print("Selected button ->> \(number)")
+        
+        let nextWillBorrow = CurrentBookNumberManager.shared.getNextWillBorrowList()
+        print("currentBorrowed.count: \(nextWillBorrow.count)")
+        if number == 0 {
+            if nextWillBorrow.count > 0 {
+                return true
+            } else {
+                return false
+            }
+        } else if number == 1 {
+            if nextWillBorrow.count > 1 {
+                return true
+            } else {
+                return false
+            }
+        } else if number == 2 {
+            if nextWillBorrow.count > 2 {
+                return true
+            } else {
+                return false
+            }
+        }
+        return false
+    }
+    
+    private func moveToHomeView() {
+        print("MoveToHomeView")
+        
+        if let tabBarController = self.tabBarController {
+            tabBarController.selectedIndex = 2
+        }
+        
+        print("MoveToHomeViewDone")
+    }
+    
+    private func moveToDetailView(_ number: Int) {
+        print("MoveToDetailView")
+        let borrowedList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
+        let reservationList = CurrentBookNumberManager.shared.getNextWillBorrowList()
+        var selectedIndex: Int = 0
+        
+        switch number {
         case 0:
-            return borrowedBooksList.keys.isEmpty
+            selectedIndex = borrowedList[0]
         case 1:
-            return borrowedBooksList.keys.isEmpty
+            selectedIndex = borrowedList[1]
         case 2:
-            return borrowedBooksList.keys.isEmpty
+            selectedIndex = borrowedList[2]
         case 3:
-            return nextWillBorrowBooksList.keys.isEmpty
+            selectedIndex = reservationList[0]
         case 4:
-            return nextWillBorrowBooksList.keys.isEmpty
+            selectedIndex = reservationList[1]
         case 5:
-            return nextWillBorrowBooksList.keys.isEmpty
+            selectedIndex = reservationList[2]
         default:
             break
         }
         
-        return false
+        CurrentBookNumberManager.shared.writeCurrentBookNumber(selectedIndex)
+        navigationController?.pushViewController(DetailBookViewController(), animated: true)
     }
     
-    func getBookInfoAndApplication(_ id: Int) {
-        if borrowedBooksList.count == 3 {
-            let fullAlert = UIAlertController(title: "대여량 초과", message: "책은 3권까지 대여할 수 있습니다", preferredStyle: .alert)
-            fullAlert.addAction(UIAlertAction(title: "확인", style: .default))
-            self.present(fullAlert, animated: true, completion: nil)
-            return
-        }
+    func reloadButtons() {
+        print("ReloadButton")
         
-        if let index = allBookList.first(where: { $0.bookId == id }) {
-            let indexCheck = borrowedBooksList.values
-            if indexCheck.contains(index) {
-                let bookAlert = UIAlertController(title: "대여 중인 책입니다", message: "책을 예약하시겠습니까?", preferredStyle: .alert)
-                bookAlert.addAction(UIAlertAction(title: "대여", style: .default, handler: { [weak self] _ in
-                    guard self != nil else { return }
-                    self?.getBookInfoAndReservation(index)
-                }))
-                bookAlert.addAction(UIAlertAction(title: "취소", style: .cancel))
-                self.present(bookAlert, animated: true, completion: nil)
-            }
-        }
+        let normalIconName: String = "plusIcon"
+        myView.borrowedImageView1.image = UIImage(named: normalIconName)
+        myView.borrowedImageView2.image = UIImage(named: normalIconName)
+        myView.borrowedImageView3.image = UIImage(named: normalIconName)
+        myView.willBorrowImageView1.image = UIImage(named: normalIconName)
+        myView.willBorrowImageView2.image = UIImage(named: normalIconName)
+        myView.willBorrowImageView3.image = UIImage(named: normalIconName)
         
-        if let index = allBookList.first(where: { $0.bookId == id }) {
-            self.myView.borrowedImageView1.image = UIImage(named: index.imageName)
-            borrowedBooksList[borrowedBooksList.count] = index
-            print("Borrowed List : \(borrowedBooksList)")
+        let borrowedBookList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
+        print("Borrowed books count: \(borrowedBookList.count)")
+        let nextWillBookList = CurrentBookNumberManager.shared.getNextWillBorrowList()
+        print("Reservation books count: \(nextWillBookList.count)")
+        
+        if borrowedBookList.count == 1 {
+            let index = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[0] } ?? 0
+            myView.borrowedImageView1.image = UIImage(named: AllBookList.shared.allBookList[index].imageName)
+        } else if borrowedBookList.count == 2 {
+            let index1 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[0] } ?? 0
+            let index2 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[1] } ?? 0
+            myView.borrowedImageView1.image = UIImage(named: AllBookList.shared.allBookList[index1].imageName)
+            myView.borrowedImageView2.image = UIImage(named: AllBookList.shared.allBookList[index2].imageName)
+        } else if borrowedBookList.count == 3 {
+            let index1 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[0] } ?? 0
+            let index2 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[1] } ?? 0
+            let index3 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[2] } ?? 0
+            myView.borrowedImageView1.image = UIImage(named: AllBookList.shared.allBookList[index1].imageName)
+            myView.borrowedImageView2.image = UIImage(named: AllBookList.shared.allBookList[index2].imageName)
+            myView.borrowedImageView3.image = UIImage(named: AllBookList.shared.allBookList[index3].imageName)
+        } else if borrowedBookList.count == 0 {
+            print("No books")
         } else {
-            fatalError("This book's index doesn't existed")
-        }
-    }
-    
-    
-    func getBookInfoAndReservation(_ bookInfo: BookInfo) {
-        if nextWillBorrowBooksList.count == 3 {
-            let fullAlert = UIAlertController(title: "예약량 초과", message: "책은 3권까지 예약할 수 있습니다", preferredStyle: .alert)
-            fullAlert.addAction(UIAlertAction(title: "확인", style: .default))
-            self.present(fullAlert, animated: true, completion: nil)
-            return
+            fatalError("ReloadButton(): borrowedBookList error")
         }
         
-        self.myView.willBorrowImageView1.image = UIImage(named: bookInfo.imageName)
-        nextWillBorrowBooksList[nextWillBorrowBooksList.count] = bookInfo
-        print("Reservation List : \(nextWillBorrowBooksList)")
-    }
-    
-    func returnBook(_ id: Int) {
-        if let indexToRemove = borrowedBooksList.values.firstIndex(where: { $0.bookId == id }) {
-            borrowedBooksList.remove(at: indexToRemove)
-            
-            if borrowedBooksList.count != 0 {
-                var newIndex = 0
-                var newBorrowedBooksList: [Int : BookInfo] = [:]
-                for (_, value) in borrowedBooksList {
-                    newBorrowedBooksList[newIndex] = value
-                    newIndex += 1
-                }
-            }
+        if nextWillBookList.count == 1 {
+            let index = AllBookList.shared.allBookList.firstIndex { $0.bookId == nextWillBookList[0] } ?? 0
+            myView.willBorrowImageView1.image = UIImage(named: AllBookList.shared.allBookList[index].imageName)
+        } else if nextWillBookList.count == 2 {
+            let index1 = AllBookList.shared.allBookList.firstIndex { $0.bookId == nextWillBookList[0] } ?? 0
+            let index2 = AllBookList.shared.allBookList.firstIndex { $0.bookId == nextWillBookList[1] } ?? 0
+            myView.willBorrowImageView1.image = UIImage(named: AllBookList.shared.allBookList[index1].imageName)
+            myView.willBorrowImageView2.image = UIImage(named: AllBookList.shared.allBookList[index2].imageName)
+        } else if nextWillBookList.count == 3 {
+            let index1 = AllBookList.shared.allBookList.firstIndex { $0.bookId == nextWillBookList[0] } ?? 0
+            let index2 = AllBookList.shared.allBookList.firstIndex { $0.bookId == nextWillBookList[1] } ?? 0
+            let index3 = AllBookList.shared.allBookList.firstIndex { $0.bookId == nextWillBookList[2] } ?? 0
+            myView.willBorrowImageView1.image = UIImage(named: AllBookList.shared.allBookList[index1].imageName)
+            myView.willBorrowImageView2.image = UIImage(named: AllBookList.shared.allBookList[index2].imageName)
+            myView.willBorrowImageView3.image = UIImage(named: AllBookList.shared.allBookList[index3].imageName)
+        } else if nextWillBookList.count == 0 {
+            print("No reservations")
         } else {
-            fatalError()
-        }
-    }
-    
-    func bookCancel(_ id: Int) {
-        if let indexToCancel = nextWillBorrowBooksList.values.firstIndex(where: { $0.bookId == id }) {
-            nextWillBorrowBooksList.remove(at: indexToCancel)
-            
-            if nextWillBorrowBooksList.count != 0 {
-                var newIndex = 0
-                var newNextWillBorrowBooksList: [ Int : BookInfo ] = [:]
-                for (_, value) in nextWillBorrowBooksList {
-                    newNextWillBorrowBooksList[newIndex] = value
-                    newIndex += 1
-                }
-            }
-        } else {
-            fatalError()
-        }
-    }
-    
-    func reloadDataAndImages() {
-        self.myView.borrowedImageView1.image = nil
-        self.myView.borrowedImageView2.image = nil
-        self.myView.borrowedImageView3.image = nil
-        self.myView.willBorrowImageView1.image = nil
-        self.myView.willBorrowImageView2.image = nil
-        self.myView.willBorrowImageView3.image = nil
-        
-        if borrowedBooksList.count > 0 {
-            for (key, value) in borrowedBooksList {
-                if key == 0 {
-                    self.myView.borrowedImageView1.image = UIImage(named: value.imageName)
-                } else  if key == 1 {
-                    self.myView.borrowedImageView2.image = UIImage(named: value.imageName)
-                }
-            }
-        }
-    }
-    
-    func whatBookInList(_ number: Int) -> Int {
-        var selectedBookId: Int
-        switch(number) {
-        case 0, 1, 2:
-            selectedBookId = borrowedBooksList[number]?.bookId ?? 0
-        case 3, 4, 5:
-            selectedBookId = nextWillBorrowBooksList[number]?.bookId ?? 0
-        default:
-            return 0
-        }
-        return selectedBookId
-    }
-    
-    private func moveToHomeView() {
-        if let tabBarController = self.tabBarController as? BTYTabBarController {
-            if let homeViewController = tabBarController.viewControllers?.first(where: { $0 is HomeViewController }) {
-                tabBarController.selectedViewController = homeViewController
-            }
-        }
-    }
-    
-    private func moveToDetailView(_ number: Int) {
-        if let bookInfo = borrowedBooksList[number] {
-            let currentNumber = bookInfo.bookId
-            CurrentBookNumberManager.shared.writeCurrentBookNumber(currentNumber)
+            fatalError("ReloadButton(): nextWillBookList error")
         }
         
-        let bookDetailViewController = DetailBookViewController()
-        navigationController?.pushViewController(bookDetailViewController, animated: true)
+        
     }
 }

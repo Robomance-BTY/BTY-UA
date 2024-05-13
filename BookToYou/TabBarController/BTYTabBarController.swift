@@ -56,12 +56,11 @@ extension BTYTabBarController {
 
 extension BTYTabBarController: UITabBarControllerDelegate {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        if let index = self.viewControllers?.firstIndex(of: self), index == 4 {
-//            self.navigationItem.setHidesBackButton(false, animated: true)
-            self.navigationItem.setRightBarButton(UIBarButtonItem(title: "돌아가기", style: .plain, target: self, action: #selector(logOut)), animated: true)
-            self.navigationItem.rightBarButtonItem?.tintColor = .systemRed
-        } else {
-//            self.navigationItem.setHidesBackButton(true, animated: false)
+        if let index = tabBar.items?.firstIndex(of: item) {
+            if let selectedViewController = viewControllers?[index] as? UINavigationController,
+               let myViewController = selectedViewController.viewControllers.first as? MyViewController {
+                myViewController.reloadButtons()
+            }
         }
     }
 }

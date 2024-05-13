@@ -102,7 +102,7 @@ extension OrderViewController {
 
 extension OrderViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Selected order stuff : \(allBookList[indexPath.item])")
+        print("Selected order stuff : \(stuffs[indexPath.item])")
         
         if let selectedStuff = dataSource.itemIdentifier(for: indexPath) {
             let selectedStuffNumber = selectedStuff.orderId

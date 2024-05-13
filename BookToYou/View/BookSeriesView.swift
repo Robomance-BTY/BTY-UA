@@ -64,12 +64,9 @@ extension BookSeriesView {
 extension BookSeriesView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedBook = dataSource[indexPath.item]
-        let number = selectedBook.bookId
-        
-        print("Selected over book: \(number)")
+        CurrentBookNumberManager.shared.writeCurrentBookNumber(selectedBook.bookId)
         
         didSelectItem?(selectedBook)
-        CurrentBookNumberManager.shared.writeCurrentBookNumber(Int(number))
         reloadView()
     }
     

@@ -18,7 +18,7 @@ class MenuView: UIView {
     var price: UITextField = UITextField()
     var todayDate: UITextField = UITextField()
     
-//    let logOutButton: UIButton = UIButton()
+    let logOutButton: UIButton = UIButton()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,12 +60,12 @@ extension MenuView {
             textField.isUserInteractionEnabled = false
         }
         
-//        self.addSubview(logOutButton)
-//        logOutButton.clipsToBounds = true
-//        logOutButton.layer.cornerRadius = 15
-//        logOutButton.setTitle("로그아웃", for: .normal)
-//        logOutButton.setTitleColor(.white, for: .normal)
-//        logOutButton.backgroundColor = .systemRed
+        self.addSubview(logOutButton)
+        logOutButton.clipsToBounds = true
+        logOutButton.layer.cornerRadius = 15
+        logOutButton.setTitle("로그아웃", for: .normal)
+        logOutButton.setTitleColor(.white, for: .normal)
+        logOutButton.backgroundColor = .systemRed
         
         price.snp.makeConstraints { make in
             make.centerY.equalToSuperview().offset(-30)
@@ -106,11 +106,11 @@ extension MenuView {
             make.height.equalTo(self.snp.height).multipliedBy(0.07)
         }
         
-//        logOutButton.snp.makeConstraints { make in
-//            make.centerX.equalToSuperview()
-//            make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-30)
-//            make.width.equalTo(self.snp.width).multipliedBy(0.2)
-//            make.height.equalTo(self.snp.height).multipliedBy(0.07)
-//        }
+        logOutButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-30)
+            make.width.equalTo(self.snp.width).multipliedBy(0.2)
+            make.height.equalTo(self.snp.height).multipliedBy(0.07)
+        }
     }
 }

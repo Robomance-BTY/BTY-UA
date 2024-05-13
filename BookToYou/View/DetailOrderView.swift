@@ -12,6 +12,16 @@ class DetailOrderView: UIView {
     let stuffImageView: UIImageView = UIImageView()
     let stuffTitle: UILabel = UILabel()
     let price: UILabel = UILabel()
+    let buyButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("구매하기", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.setBackgroundImage(color: .lightGray, forState: .highlighted)
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 10
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,7 +38,7 @@ class DetailOrderView: UIView {
 
 extension DetailOrderView {
     private func configure() {
-        let component = [stuffImageView, stuffTitle, price]
+        let component = [stuffImageView, stuffTitle, price, buyButton]
         component.forEach { component in
             self.addSubview(component)
         }
@@ -39,9 +49,10 @@ extension DetailOrderView {
         stuffImageView.layer.borderColor = UIColor.black.cgColor
         
         stuffImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
+            make.bottom.equalTo(self.snp.centerY).offset(20)
             make.centerX.equalToSuperview()
-            make.height.width.equalTo(self.snp.height).multipliedBy(0.25)
+            make.width.equalToSuperview().multipliedBy(0.4)
+            make.height.equalTo(self.snp.width).multipliedBy(0.4)
         }
         
         stuffTitle.font = UIFont.boldSystemFont(ofSize: 25)
@@ -49,7 +60,6 @@ extension DetailOrderView {
         stuffTitle.textAlignment = .center
         stuffTitle.snp.makeConstraints { make in
             make.top.equalTo(stuffImageView.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
             make.centerX.equalToSuperview()
         }
         
@@ -58,18 +68,14 @@ extension DetailOrderView {
         price.textAlignment = .center
         price.snp.makeConstraints { make in
             make.top.equalTo(stuffTitle.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview()
             make.centerX.equalToSuperview()
         }
         
-        setComponents()
-    }
-    
-    private func setComponents() {
-        let currentStuffInfo = stuffs[OrderStuffNumberManager.shared.getOrderStuffNumber()]
-        
-        stuffImageView.image = UIImage(named: currentStuffInfo.stuffName)
-        stuffTitle.text = currentStuffInfo.title
-        price.text = String(Int(currentStuffInfo.price)) + "원"
+        buyButton.snp.makeConstraints { make in
+            make.top.equalTo(price.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.2)
+            make.height.equalToSuperview().multipliedBy(0.05)
+        }
     }
 }
