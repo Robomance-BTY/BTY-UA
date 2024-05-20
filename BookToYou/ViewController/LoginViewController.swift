@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import NVActivityIndicatorView
 
 class LoginViewController: UIViewController {
     
@@ -77,14 +78,43 @@ extension LoginViewController {
 
 extension LoginViewController {
     @objc private func loginButtonClicked() {
-        if loginTextField.text == "1" {
-            let mainViewController = BTYTabBarController()
-            mainViewController.modalPresentationStyle = .overFullScreen
-            self.present(mainViewController, animated: true, completion: nil)
-        } else {
+        guard let loginCode = loginTextField.text, loginCode == "1" else {
             let notCorrectLoginIDAlert = UIAlertController(title: "코드가 틀립니다", message: "지정된 코드가 아닙니다.\n다시 입력해주세요", preferredStyle: .alert)
             notCorrectLoginIDAlert.addAction(UIAlertAction(title: "확인", style: .default))
             self.present(notCorrectLoginIDAlert, animated: true, completion: nil)
+            return
+        }
+        
+        let loadingView = UIView(frame: self.view.bounds)
+        loadingView.backgroundColor = UIColor(white: 0, alpha: 0.6)
+        loadingView.isUserInteractionEnabled = true
+        
+        let activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50), type: .ballPulse, color: .white, padding: nil)
+        activityIndicator.center = loadingView.center
+        loadingView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        self.view.addSubview(loadingView)
+        
+        APIManager.shared.login { [weak self] success in
+            DispatchQueue.main.async {
+                if success {
+                    activityIndicator.stopAnimating()
+                    loadingView.removeFromSuperview()
+                    
+                    let mainViewController = BTYTabBarController()
+                    mainViewController.modalPresentationStyle = .overFullScreen
+                    self?.present(mainViewController, animated: true, completion: nil)
+                } else {
+                    activityIndicator.stopAnimating()
+                    loadingView.removeFromSuperview()
+                    
+                    let notCorrectLoginIDAlert = UIAlertController(title: "로그인 실패", message: "다시 시도해주세요", preferredStyle: .alert)
+                    notCorrectLoginIDAlert.addAction(UIAlertAction(title: "확인", style: .default))
+                    self?.present(notCorrectLoginIDAlert, animated: true, completion: nil)
+                    return
+                }
+            }
         }
     }
 }

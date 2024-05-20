@@ -35,6 +35,8 @@
 		FDA1F7D62BCE0895008D07FF /* BookInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7D52BCE0895008D07FF /* BookInformation.swift */; };
 		FDA1F7D82BCE0911008D07FF /* CurrentBookNumberManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7D72BCE0911008D07FF /* CurrentBookNumberManager.swift */; };
 		FDA1F7DA2BCE099B008D07FF /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA1F7D92BCE099B008D07FF /* MyView.swift */; };
+		FDF601742BFB4FBF00733493 /* NVActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = FDF601732BFB4FBF00733493 /* NVActivityIndicatorView */; };
+		FDF601762BFB4FBF00733493 /* NVActivityIndicatorViewExtended in Frameworks */ = {isa = PBXBuildFile; productRef = FDF601752BFB4FBF00733493 /* NVActivityIndicatorViewExtended */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDF601762BFB4FBF00733493 /* NVActivityIndicatorViewExtended in Frameworks */,
+				FDF601742BFB4FBF00733493 /* NVActivityIndicatorView in Frameworks */,
 				FDA1F7D02BCE01C3008D07FF /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,6 +194,8 @@
 			name = BookToYou;
 			packageProductDependencies = (
 				FDA1F7CF2BCE01C3008D07FF /* SnapKit */,
+				FDF601732BFB4FBF00733493 /* NVActivityIndicatorView */,
+				FDF601752BFB4FBF00733493 /* NVActivityIndicatorViewExtended */,
 			);
 			productName = BookToYou;
 			productReference = FDA1F7AA2BCE00BB008D07FF /* BookToYou.app */;
@@ -221,6 +227,7 @@
 			mainGroup = FDA1F7A12BCE00BB008D07FF;
 			packageReferences = (
 				FDA1F7CE2BCE01C3008D07FF /* XCRemoteSwiftPackageReference "SnapKit" */,
+				FDF601722BFB4FBF00733493 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 			);
 			productRefGroup = FDA1F7AB2BCE00BB008D07FF /* Products */;
 			projectDirPath = "";
@@ -505,6 +512,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		FDF601722BFB4FBF00733493 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -512,6 +527,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FDA1F7CE2BCE01C3008D07FF /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		FDF601732BFB4FBF00733493 /* NVActivityIndicatorView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDF601722BFB4FBF00733493 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorView;
+		};
+		FDF601752BFB4FBF00733493 /* NVActivityIndicatorViewExtended */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDF601722BFB4FBF00733493 /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */;
+			productName = NVActivityIndicatorViewExtended;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

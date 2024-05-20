@@ -20,6 +20,12 @@ class MyView: UIView {
     let borrowedBackground3: UIView = UIView()
     let borrowedImageView3: UIImageView = UIImageView()
     var borrowedButton3: UIButton = UIButton()
+    let borrowedBackground4: UIView = UIView()
+    let borrowedImageView4: UIImageView = UIImageView()
+    var borrowedButton4: UIButton = UIButton()
+    let borrowedBackground5: UIView = UIView()
+    let borrowedImageView5: UIImageView = UIImageView()
+    var borrowedButton5: UIButton = UIButton()
     
     let willBorrowLabel: UILabel = UILabel()
     let willBorrowBackground1: UIView = UIView()
@@ -56,7 +62,7 @@ extension MyView {
             label.font = .boldSystemFont(ofSize: 20)
         }
         
-        let backgrounds = [borrowedBackground1, borrowedBackground2, borrowedBackground3, willBorrowBackground1, willBorrowBackground2, willBorrowBackground3]
+        let backgrounds = [borrowedBackground1, borrowedBackground2, borrowedBackground3, borrowedBackground4, borrowedBackground5, willBorrowBackground1, willBorrowBackground2, willBorrowBackground3]
         backgrounds.forEach { background in
             self.addSubview(background)
             
@@ -69,7 +75,7 @@ extension MyView {
             background.layer.shadowOpacity = 1.0
         }
         
-        let imageViews = [borrowedImageView1, borrowedImageView2, borrowedImageView3, willBorrowImageView1, willBorrowImageView2, willBorrowImageView3]
+        let imageViews = [borrowedImageView1, borrowedImageView2, borrowedImageView3, borrowedImageView4, borrowedImageView5, willBorrowImageView1, willBorrowImageView2, willBorrowImageView3]
         imageViews.forEach { imageView in
             self.addSubview(imageView)
             
@@ -85,7 +91,7 @@ extension MyView {
             imageView.contentMode = .scaleAspectFill
         }
         
-        let buttons = [borrowedButton1, borrowedButton2, borrowedButton3, willBorrowButton1, willBorrowButton2, willBorrowButton3]
+        let buttons = [borrowedButton1, borrowedButton2, borrowedButton3, borrowedButton4, borrowedButton5, willBorrowButton1, willBorrowButton2, willBorrowButton3]
         buttons.forEach { button in
             self.addSubview(button)
             
@@ -102,29 +108,43 @@ extension MyView {
         }
         borrowedLabel.text = "현재 빌린 책"
         
-        borrowedBackground2.snp.makeConstraints { make in
+        borrowedBackground3.snp.makeConstraints { make in
             make.top.equalTo(borrowedLabel.snp.bottom)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.16)
             make.height.equalToSuperview().multipliedBy(0.33)
         }
         
-        borrowedBackground1.snp.makeConstraints { make in
+        borrowedBackground2.snp.makeConstraints { make in
             make.top.equalTo(borrowedLabel.snp.bottom)
-            make.trailing.equalTo(borrowedBackground2.snp.leading).offset(-40)
+            make.trailing.equalTo(borrowedBackground3.snp.leading).offset(-20)
             make.width.equalToSuperview().multipliedBy(0.16)
             make.height.equalToSuperview().multipliedBy(0.33)
         }
         
-        borrowedBackground3.snp.makeConstraints { make in
+        borrowedBackground1.snp.makeConstraints { make in
             make.top.equalTo(borrowedLabel.snp.bottom)
-            make.leading.equalTo(borrowedBackground2.snp.trailing).offset(40)
+            make.trailing.equalTo(borrowedBackground2.snp.leading).offset(-20)
+            make.width.equalToSuperview().multipliedBy(0.16)
+            make.height.equalToSuperview().multipliedBy(0.33)
+        }
+        
+        borrowedBackground4.snp.makeConstraints { make in
+            make.top.equalTo(borrowedLabel.snp.bottom)
+            make.leading.equalTo(borrowedBackground3.snp.trailing).offset(20)
+            make.width.equalToSuperview().multipliedBy(0.16)
+            make.height.equalToSuperview().multipliedBy(0.33)
+        }
+        
+        borrowedBackground5.snp.makeConstraints { make in
+            make.top.equalTo(borrowedLabel.snp.bottom)
+            make.leading.equalTo(borrowedBackground4.snp.trailing).offset(20)
             make.width.equalToSuperview().multipliedBy(0.16)
             make.height.equalToSuperview().multipliedBy(0.33)
         }
         
         willBorrowLabel.snp.makeConstraints { make in
-            make.top.equalTo(borrowedBackground2.snp.bottom)
+            make.top.equalTo(borrowedBackground3.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.1)
         }
@@ -139,14 +159,14 @@ extension MyView {
         
         willBorrowBackground1.snp.makeConstraints { make in
             make.top.equalTo(willBorrowLabel.snp.bottom)
-            make.trailing.equalTo(willBorrowBackground2.snp.leading).offset(-40)
+            make.trailing.equalTo(willBorrowBackground2.snp.leading).offset(-20)
             make.width.equalToSuperview().multipliedBy(0.16)
             make.height.equalToSuperview().multipliedBy(0.33)
         }
         
         willBorrowBackground3.snp.makeConstraints { make in
             make.top.equalTo(willBorrowLabel.snp.bottom)
-            make.leading.equalTo(willBorrowBackground2.snp.trailing).offset(40)
+            make.leading.equalTo(willBorrowBackground2.snp.trailing).offset(20)
             make.width.equalToSuperview().multipliedBy(0.16)
             make.height.equalToSuperview().multipliedBy(0.33)
         }
@@ -176,6 +196,24 @@ extension MyView {
         }
         borrowedButton3.snp.makeConstraints { make in
             make.center.width.height.equalTo(borrowedImageView3)
+        }
+        
+        borrowedImageView4.snp.makeConstraints { make in
+            make.center.equalTo(borrowedBackground4.snp.center)
+            make.width.equalTo(borrowedBackground4.snp.width).multipliedBy(0.90)
+            make.height.equalTo(borrowedBackground4.snp.height).multipliedBy(0.93)
+        }
+        borrowedButton4.snp.makeConstraints { make in
+            make.center.width.height.equalTo(borrowedImageView4)
+        }
+        
+        borrowedImageView5.snp.makeConstraints { make in
+            make.center.equalTo(borrowedBackground5.snp.center)
+            make.width.equalTo(borrowedBackground5.snp.width).multipliedBy(0.90)
+            make.height.equalTo(borrowedBackground5.snp.height).multipliedBy(0.93)
+        }
+        borrowedButton5.snp.makeConstraints { make in
+            make.center.width.height.equalTo(borrowedImageView5)
         }
         
         willBorrowImageView1.snp.makeConstraints { make in

@@ -23,6 +23,7 @@ class MyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.delegate = self
         configureLayout()
     }
 }
@@ -47,6 +48,8 @@ extension MyViewController {
         myView.borrowedButton1.addTarget(self, action: #selector(borrowed1Clicked), for: .touchUpInside)
         myView.borrowedButton2.addTarget(self, action: #selector(borrowed2Clicked), for: .touchUpInside)
         myView.borrowedButton3.addTarget(self, action: #selector(borrowed3Clicked), for: .touchUpInside)
+        myView.borrowedButton4.addTarget(self, action: #selector(borrowed4Clicked), for: .touchUpInside)
+        myView.borrowedButton5.addTarget(self, action: #selector(borrowed5Clicked), for: .touchUpInside)
         myView.willBorrowButton1.addTarget(self, action: #selector(willBorrow1Clicked), for: .touchUpInside)
         myView.willBorrowButton2.addTarget(self, action: #selector(willBorrow2Clicked), for: .touchUpInside)
         myView.willBorrowButton3.addTarget(self, action: #selector(willBorrow3Clicked), for: .touchUpInside)
@@ -81,10 +84,28 @@ extension MyViewController {
         }
     }
     
+    @objc private func borrowed4Clicked() {
+        print("Borrowed4 button clicked")
+        if checkBorrowedBookExisted(3) == true {
+            moveToDetailView(3)
+        } else {
+            moveToHomeView()
+        }
+    }
+    
+    @objc private func borrowed5Clicked() {
+        print("Borrowed5 button clicked")
+        if checkBorrowedBookExisted(4) == true {
+            moveToDetailView(4)
+        } else {
+            moveToHomeView()
+        }
+    }
+    
     @objc private func willBorrow1Clicked() {
         print("Will borrow1 button clicked")
         if checkWillBorrowBookExisted(0) == true {
-            moveToDetailView(3)
+            moveToDetailView(5)
         } else {
             moveToHomeView()
         }
@@ -93,7 +114,7 @@ extension MyViewController {
     @objc private func willBorrow2Clicked() {
         print("Will borrow2 button clicked")
         if checkWillBorrowBookExisted(1) == true {
-            moveToDetailView(4)
+            moveToDetailView(6)
         } else {
             moveToHomeView()
         }
@@ -102,7 +123,7 @@ extension MyViewController {
     @objc private func willBorrow3Clicked() {
         print("Will borrow3 button clicked")
         if checkWillBorrowBookExisted(2) == true {
-            moveToDetailView(5)
+            moveToDetailView(7)
         } else {
             moveToHomeView()
         }
@@ -134,7 +155,20 @@ extension MyViewController {
             } else {
                 return false
             }
+        } else if number == 3 {
+            if currentBorrowed.count > 3 {
+                return true
+            } else {
+                return false
+            }
+        } else if number == 4 {
+            if currentBorrowed.count > 4 {
+                return true
+            } else {
+                return false
+            }
         }
+        
         return false
     }
     
@@ -190,10 +224,14 @@ extension MyViewController {
         case 2:
             selectedIndex = borrowedList[2]
         case 3:
-            selectedIndex = reservationList[0]
+            selectedIndex = borrowedList[3]
         case 4:
-            selectedIndex = reservationList[1]
+            selectedIndex = borrowedList[4]
         case 5:
+            selectedIndex = reservationList[0]
+        case 6:
+            selectedIndex = reservationList[1]
+        case 7:
             selectedIndex = reservationList[2]
         default:
             break
@@ -210,6 +248,8 @@ extension MyViewController {
         myView.borrowedImageView1.image = UIImage(named: normalIconName)
         myView.borrowedImageView2.image = UIImage(named: normalIconName)
         myView.borrowedImageView3.image = UIImage(named: normalIconName)
+        myView.borrowedImageView4.image = UIImage(named: normalIconName)
+        myView.borrowedImageView5.image = UIImage(named: normalIconName)
         myView.willBorrowImageView1.image = UIImage(named: normalIconName)
         myView.willBorrowImageView2.image = UIImage(named: normalIconName)
         myView.willBorrowImageView3.image = UIImage(named: normalIconName)
@@ -234,6 +274,26 @@ extension MyViewController {
             myView.borrowedImageView1.image = UIImage(named: AllBookList.shared.allBookList[index1].imageName)
             myView.borrowedImageView2.image = UIImage(named: AllBookList.shared.allBookList[index2].imageName)
             myView.borrowedImageView3.image = UIImage(named: AllBookList.shared.allBookList[index3].imageName)
+        } else if borrowedBookList.count == 4 {
+            let index1 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[0] } ?? 0
+            let index2 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[1] } ?? 0
+            let index3 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[2] } ?? 0
+            let index4 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[3] } ?? 0
+            myView.borrowedImageView1.image = UIImage(named: AllBookList.shared.allBookList[index1].imageName)
+            myView.borrowedImageView2.image = UIImage(named: AllBookList.shared.allBookList[index2].imageName)
+            myView.borrowedImageView3.image = UIImage(named: AllBookList.shared.allBookList[index3].imageName)
+            myView.borrowedImageView4.image = UIImage(named: AllBookList.shared.allBookList[index4].imageName)
+        } else if borrowedBookList.count == 5 {
+            let index1 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[0] } ?? 0
+            let index2 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[1] } ?? 0
+            let index3 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[2] } ?? 0
+            let index4 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[3] } ?? 0
+            let index5 = AllBookList.shared.allBookList.firstIndex { $0.bookId == borrowedBookList[4] } ?? 0
+            myView.borrowedImageView1.image = UIImage(named: AllBookList.shared.allBookList[index1].imageName)
+            myView.borrowedImageView2.image = UIImage(named: AllBookList.shared.allBookList[index2].imageName)
+            myView.borrowedImageView3.image = UIImage(named: AllBookList.shared.allBookList[index3].imageName)
+            myView.borrowedImageView4.image = UIImage(named: AllBookList.shared.allBookList[index4].imageName)
+            myView.borrowedImageView5.image = UIImage(named: AllBookList.shared.allBookList[index5].imageName)
         } else if borrowedBookList.count == 0 {
             print("No books")
         } else {
@@ -260,7 +320,15 @@ extension MyViewController {
         } else {
             fatalError("ReloadButton(): nextWillBookList error")
         }
-        
-        
+    }
+}
+
+extension MyViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if let detailViewController = viewController as? DetailBookViewController {
+            detailViewController.onDismiss = { [weak self] in
+                self?.reloadButtons()
+            }
+        }
     }
 }
