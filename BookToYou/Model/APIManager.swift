@@ -143,7 +143,7 @@ class APIManager {
         let locationInfo: UInt64
     }
 
-    public func rentOrReserve(completion: @escaping((Bool) -> Void)) {
+    public func rentOrReserve(completion: @escaping((Int) -> Void)) {
         let parameters = [
             "userId":currentId,
             "bookId":currentBookId
@@ -162,7 +162,7 @@ class APIManager {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 print(String(describing: error))
-                completion(false)
+                completion(0)
                 return
             }
             
@@ -173,21 +173,24 @@ class APIManager {
                         let decoder = JSONDecoder()
                         let rentOrReserveResponse = try decoder.decode(RentOrReserve.self, from: data)
                         print(rentOrReserveResponse)
-                        completion(true)
+                        
+                        
+                        
+                        completion(1)
                     } catch {
                         print("RentOrReserve decoder error")
                         print(error)
-                        completion(false)
+                        completion(0)
                     }
                 case 404:
                     print("RentOrReserve 404 error")
-                    completion(false)
+                    completion(0)
                 case 500:
                     print("RentOrReserve 500 error")
-                    completion(false)
+                    completion(0)
                 default:
                     print("RentOrReserve Received HTTP \(httpResponse.statusCode)")
-                    completion(false)
+                    completion(0)
                 }
             } else {
                 print("RentOrReserve switch error")

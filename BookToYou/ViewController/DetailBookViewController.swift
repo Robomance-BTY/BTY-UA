@@ -111,7 +111,7 @@ extension DetailBookViewController {
             willBorrow.addAction(UIAlertAction(title: "취소", style: .cancel))
             willBorrow.addAction(UIAlertAction(title: "대여", style: .default, handler: { [weak self] _ in
                 guard self != nil else { return }
-                self?.rentBook()
+                self?.checkBookRented()
                 MyViewController.shared.reloadButtons()
             }))
             self.present(willBorrow, animated: true, completion: nil)
@@ -156,22 +156,31 @@ extension DetailBookViewController {
                     
                     let alreadyBorrowedAlert = UIAlertController(title: "대여중", message: "대여중인 책입니다. 예약하시겠습니까?", preferredStyle: .alert)
                     alreadyBorrowedAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: { _ in
-                        self?.reservationBook()
+                        self?.rentOrReservationBook()
                     }))
                     alreadyBorrowedAlert.addAction(UIAlertAction(title: "취소", style: .cancel))
                     self?.present(alreadyBorrowedAlert, animated: true, completion: nil)
-                    
-                    self?.reservationBook()
                 } else {
                     activityIndicator.stopAnimating()
                     loadingView.removeFromSuperview()
-                    self?.rentBook()
+                    self?.rentOrReservationBook()
                 }
             }
         }
     }
     
-    func rentBook() {
+    func rentOrReservationBook() {
+        let loadingView = UIView(frame: self.view.bounds)
+        loadingView.backgroundColor = UIColor(white: 0, alpha: 0.6)
+        loadingView.isUserInteractionEnabled = true
+        
+        let activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50), type: .ballPulse, color: .white, padding: nil)
+        activityIndicator.center = loadingView.center
+        loadingView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        self.view.addSubview(loadingView)
+        
         print("------------------------------------------------------------")
         print("rentBook")
         let originalList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
@@ -184,34 +193,62 @@ extension DetailBookViewController {
         if originalList.count >= 0 && (originalList.count + reservationList.count) < 5 {
             print("originalList + ReservationList is not full")
             let selectedBookNumber = CurrentBookNumberManager.shared.getCurrentBookNumber()
-            print("selectedBookNumber: \(CurrentBookNumberManager.shared.getCurrentBookNumber())")
-            let selectedBookIndex = AllBookList.shared.allBookList.firstIndex { $0.bookId == selectedBookNumber }
-            print("SelectedBook is: \(AllBookList.shared.allBookList[selectedBookIndex ?? 0].title)")
+            let numberForRequest = UInt64(selectedBookNumber % 10000)
             
+            APIManager.shared.changeCurrentAPIRequestBookID(numberForRequest)
             
-            if AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus == .borrowed {
-                let alreadyBorrowedAlert = UIAlertController(title: "대여중", message: "대여중인 책입니다. 예약하시겠습니까?", preferredStyle: .alert)
-                alreadyBorrowedAlert.addAction(UIAlertAction(title: "확인", style: .default))
-                alreadyBorrowedAlert.addAction(UIAlertAction(title: "취소", style: .cancel))
-                self.present(alreadyBorrowedAlert, animated: true) {
-                    self.reservationBook()
-                    print("------------------------------------------------------------")
+            APIManager.shared.rentOrReserve { code in
+                DispatchQueue.main.async {
+                    if code == 0 {
+                        let errorAlert = UIAlertController(title: "오류 발생", message: "관리자에게 문의하세요", preferredStyle: .alert)
+                        errorAlert.addAction(UIAlertAction(title: "확인", style: .default))
+                        self.present(errorAlert, animated: true, completion: nil)
+                    } else if code == 1 {
+                        // Book rented
+                        print("selectedBookNumber: \(CurrentBookNumberManager.shared.getCurrentBookNumber())")
+                        let selectedBookIndex = AllBookList.shared.allBookList.firstIndex { $0.bookId == selectedBookNumber }
+                        print("SelectedBook is: \(AllBookList.shared.allBookList[selectedBookIndex ?? 0].title)")
+                        newList = originalList
+                        AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus = .borrowed
+                        print("Selected book's current status: \(AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus)")
+                        newList.append(AllBookList.shared.allBookList[selectedBookIndex ?? 0].bookId)
+                        print("NewList: \(newList)")
+                        CurrentBookNumberManager.shared.writeCurrentBorrowedList(newList)
+                        MyViewController.shared.reloadButtons()
+                        self.configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
+                        print("------------------------------------------------------------")
+                        MyViewController.shared.reloadButtons()
+                        self.onDismiss?()
+                        activityIndicator.stopAnimating()
+                        loadingView.removeFromSuperview()
+                    } else if code == 2 {
+                        let originalList = CurrentBookNumberManager.shared.getNextWillBorrowList()
+                        let borrowedList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
+                        var newList: [Int] = []
+                        
+                        if originalList.count >= 0 && (originalList.count + borrowedList.count) < 5 {
+                            let selectedBookNumber = CurrentBookNumberManager.shared.getCurrentBookNumber()
+                            let selectedBookIndex = AllBookList.shared.allBookList.firstIndex { $0.bookId == selectedBookNumber }
+                            AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus = .booked
+                            newList.append(AllBookList.shared.allBookList[selectedBookIndex ?? 0].bookId)
+                            CurrentBookNumberManager.shared.writeNextWillBorrowList(newList)
+                            self.configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
+                            MyViewController.shared.reloadButtons()
+                            self.onDismiss?()
+                            activityIndicator.stopAnimating()
+                            loadingView.removeFromSuperview()
+                        } else {
+                            self.rentOverAlert()
+                            activityIndicator.stopAnimating()
+                            loadingView.removeFromSuperview()
+                        }
+                    }
                 }
-            } else {
-                newList = originalList
-                AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus = .borrowed
-                print("Selected book's current status: \(AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus)")
-                newList.append(AllBookList.shared.allBookList[selectedBookIndex ?? 0].bookId)
-                print("NewList: \(newList)")
-                CurrentBookNumberManager.shared.writeCurrentBorrowedList(newList)
-                MyViewController.shared.reloadButtons()
-                configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
-                print("------------------------------------------------------------")
-                MyViewController.shared.reloadButtons()
-                self.onDismiss?()
             }
         } else {
             rentOverAlert()
+            activityIndicator.stopAnimating()
+            loadingView.removeFromSuperview()
         }
     }
     
@@ -237,23 +274,23 @@ extension DetailBookViewController {
         self.onDismiss?()
     }
     
-    func reservationBook() {
-        let originalList = CurrentBookNumberManager.shared.getNextWillBorrowList()
-        let borrowedList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
-        var newList: [Int] = []
-        
-        if originalList.count >= 0 && (originalList.count + borrowedList.count) < 5 {
-            let selectedBookNumber = CurrentBookNumberManager.shared.getCurrentBookNumber()
-            let selectedBookIndex = AllBookList.shared.allBookList.firstIndex { $0.bookId == selectedBookNumber }
-            AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus = .booked
-            newList.append(AllBookList.shared.allBookList[selectedBookIndex ?? 0].bookId)
-            CurrentBookNumberManager.shared.writeNextWillBorrowList(newList)
-            configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
-            MyViewController.shared.reloadButtons()
-        } else {
-            rentOverAlert()
-        }
-    }
+//    func reservationBook() {
+//        let originalList = CurrentBookNumberManager.shared.getNextWillBorrowList()
+//        let borrowedList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
+//        var newList: [Int] = []
+//        
+//        if originalList.count >= 0 && (originalList.count + borrowedList.count) < 5 {
+//            let selectedBookNumber = CurrentBookNumberManager.shared.getCurrentBookNumber()
+//            let selectedBookIndex = AllBookList.shared.allBookList.firstIndex { $0.bookId == selectedBookNumber }
+//            AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus = .booked
+//            newList.append(AllBookList.shared.allBookList[selectedBookIndex ?? 0].bookId)
+//            CurrentBookNumberManager.shared.writeNextWillBorrowList(newList)
+//            configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
+//            MyViewController.shared.reloadButtons()
+//        } else {
+//            rentOverAlert()
+//        }
+//    }
 }
 
 extension UIButton {
