@@ -14,8 +14,17 @@ class APIManager {
         currentBookId = bookId
     }
     
+    public func changeCheckRentBookID(_ bookId: UInt64) {
+        checkRentBookId = bookId
+    }
+    
+    private var checkRentBookId: UInt64 = 1
     private let currentId: UInt64 = 1
     private var currentBookId: UInt64 = 1
+    
+    public func getMyId() -> Int {
+        return Int(currentId)
+    }
     
     struct LoginResponse: Codable {
         let id: UInt64
@@ -530,6 +539,53 @@ class APIManager {
                 default:
                     print("CancelReservation default error")
                     completion(false)
+                }
+            }
+        }
+
+        task.resume()
+    }
+    
+    struct CheckRentBook: Codable {
+        let userId: UInt64
+    }
+    
+    public func checkReservationUser(completion: @escaping((Int) -> Void)) {
+        let parameters = [
+            "bookId":checkRentBookId
+        ]
+        guard let postData = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
+            print("Error in creating JOSN in CheckReservationUser")
+            return
+        }
+
+        var request = URLRequest(url: URL(string: "192.168.1.235:8082/application/api/users-by-book")!,timeoutInterval: Double.infinity)
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        request.httpMethod = "POST"
+        request.httpBody = postData
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print(String(describing: error))
+                return
+            }
+
+            if let httpResponse = response as? HTTPURLResponse {
+                switch httpResponse.statusCode {
+                case 200:
+                    do {
+                        let decoder = JSONDecoder()
+                        let checkRentUser = try? decoder.decode(CheckRentBook.self, from: data)
+                        print(checkRentUser?.userId ?? 0)
+                        completion(Int(checkRentUser?.userId ?? 0))
+                    }
+                case 404:
+                    print("CheckReservationUser 404 error")
+                    completion(0)
+                default:
+                    print("CheckReservationUser default error")
+                    completion(0)
                 }
             }
         }

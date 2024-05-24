@@ -182,7 +182,7 @@ extension DetailBookViewController {
         self.view.addSubview(loadingView)
         
         print("------------------------------------------------------------")
-        print("rentBook")
+        print("rentOrReservation")
         let originalList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
         print("Current borrowed list: \(originalList)")
         let reservationList = CurrentBookNumberManager.shared.getNextWillBorrowList()
@@ -200,6 +200,8 @@ extension DetailBookViewController {
             APIManager.shared.rentOrReserve { code in
                 DispatchQueue.main.async {
                     if code == 0 {
+                        print("APIManager.shared.rentOrReserve -->> Rent side error occured")
+                        
                         let errorAlert = UIAlertController(title: "오류 발생", message: "관리자에게 문의하세요", preferredStyle: .alert)
                         errorAlert.addAction(UIAlertAction(title: "확인", style: .default))
                         self.present(errorAlert, animated: true, completion: nil)
@@ -259,18 +261,127 @@ extension DetailBookViewController {
     }
     
     func returnBook() {
-        var borrowedList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
-        let removeId = CurrentBookNumberManager.shared.getCurrentBookNumber()
-        print("removeId: \(removeId)")
+        let loadingView = UIView(frame: self.view.bounds)
+        loadingView.backgroundColor = UIColor(white: 0, alpha: 0.6)
+        loadingView.isUserInteractionEnabled = true
         
-        let selectedBookIndex = AllBookList.shared.allBookList.firstIndex { $0.bookId == removeId } ?? 0
-        let selectedRemoveIndex = borrowedList.firstIndex { $0 == removeId } ?? 0
-        AllBookList.shared.allBookList[selectedBookIndex].currentStatus = .normal
-        borrowedList.remove(at: selectedRemoveIndex)
-        print("returnBook: \(borrowedList)")
-        CurrentBookNumberManager.shared.writeCurrentBorrowedList(borrowedList)
-        configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
+        let activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50), type: .ballPulse, color: .white, padding: nil)
+        activityIndicator.center = loadingView.center
+        loadingView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
         
+        self.view.addSubview(loadingView)
+        
+        let selectedBookNumber = CurrentBookNumberManager.shared.getCurrentBookNumber()
+        let numberForRequest = UInt64(selectedBookNumber % 10000)
+        
+        APIManager.shared.changeCurrentAPIRequestBookID(numberForRequest)
+        
+        APIManager.shared.returnBook { success in
+            DispatchQueue.main.async {
+                if success {
+                    var borrowedList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
+                    let removeId = CurrentBookNumberManager.shared.getCurrentBookNumber()
+                    print("removeId: \(removeId)")
+                    
+                    let selectedBookIndex = AllBookList.shared.allBookList.firstIndex { $0.bookId == removeId } ?? 0
+                    let selectedRemoveIndex = borrowedList.firstIndex { $0 == removeId } ?? 0
+                    AllBookList.shared.allBookList[selectedBookIndex].currentStatus = .normal
+                    borrowedList.remove(at: selectedRemoveIndex)
+                    print("returnBook: \(borrowedList)")
+                    CurrentBookNumberManager.shared.writeCurrentBorrowedList(borrowedList)
+                    self.configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
+                    
+                    activityIndicator.stopAnimating()
+                    loadingView.removeFromSuperview()
+                    
+                    self.onDismiss?()
+                } else {
+                    activityIndicator.stopAnimating()
+                    loadingView.removeFromSuperview()
+                    print("APIManager.shared.rentOrReserve -->> Reservation side error occured")
+                    let errorAlert = UIAlertController(title: "오류 발생", message: "관리자에게 문의하세요", preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "확인", style: .default))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func cancelReservation() {
+        let loadingView = UIView(frame: self.view.bounds)
+        loadingView.backgroundColor = UIColor(white: 0, alpha: 0.6)
+        loadingView.isUserInteractionEnabled = true
+        
+        let activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50), type: .ballPulse, color: .white, padding: nil)
+        activityIndicator.center = loadingView.center
+        loadingView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        self.view.addSubview(loadingView)
+        
+        var reservationList = CurrentBookNumberManager.shared.getNextWillBorrowList()
+        
+        APIManager.shared.cancelReservation { success in
+            DispatchQueue.main.async {
+                if success {
+                    for reservation in reservationList {
+                        let selectedBookIndex = AllBookList.shared.allBookList.firstIndex { $0.bookId == reservation } ?? 0
+                        AllBookList.shared.allBookList[selectedBookIndex].currentStatus = .normal
+                        reservationList.remove(at: selectedBookIndex)
+                        print("reservationList: \(reservationList)")
+                        CurrentBookNumberManager.shared.writeNextWillBorrowList(reservationList)
+                        
+                        activityIndicator.stopAnimating()
+                        loadingView.removeFromSuperview()
+                        
+                        self.onDismiss?()
+                    }
+                } else {
+                    activityIndicator.stopAnimating()
+                    loadingView.removeFromSuperview()
+                    
+                    print("APIManager.shared.cancelReservation error occured")
+                    let errorAlert = UIAlertController(title: "오류 발생", message: "관리자에게 문의하세요", preferredStyle: .alert)
+                    errorAlert.addAction(UIAlertAction(title: "확인", style: .default))
+                    self.present(errorAlert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func checkRentUserAndChangeStatus() {
+        let myId = APIManager.shared.getMyId()
+        
+        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
+            APIManager.shared.checkReservationUser { userId in
+                DispatchQueue.main.async {
+                    if userId == myId {
+                        self.changeBookToRent()
+                    }
+                }
+            }
+        }
+    }
+    
+    func changeBookToRent() {
+        let originalList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
+        let reservationBookList = CurrentBookNumberManager.shared.getNextWillBorrowList()
+        let firstBookId = reservationBookList[0]
+        var newList: [Int] = []
+        
+        let selectedBookIndex = AllBookList.shared.allBookList.firstIndex { $0.bookId == firstBookId }
+        print("SelectedBook is: \(AllBookList.shared.allBookList[selectedBookIndex ?? 0].title)")
+        newList = originalList
+        AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus = .borrowed
+        print("Selected book's current status: \(AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus)")
+        newList.append(AllBookList.shared.allBookList[selectedBookIndex ?? 0].bookId)
+        print("NewList: \(newList)")
+        CurrentBookNumberManager.shared.writeCurrentBorrowedList(newList)
+        MyViewController.shared.reloadButtons()
+        self.configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
+        print("------------------------------------------------------------")
+        MyViewController.shared.reloadButtons()
         self.onDismiss?()
     }
     
