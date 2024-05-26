@@ -11,6 +11,8 @@ import NVActivityIndicatorView
 
 class DetailBookViewController: UIViewController {
     
+    var checkStatusTimer: Timer?
+    
     var onDismiss: (() -> Void)?
     
     let detailView: DetailBookView = DetailBookView()
@@ -144,8 +146,16 @@ extension DetailBookViewController {
         
         self.view.addSubview(loadingView)
         
-        let currentBookNumber = CurrentBookNumberManager.shared.getCurrentBookNumber() % 10000
-        APIManager.shared.changeCurrentAPIRequestBookID(UInt64(currentBookNumber))
+        let selectedBookNumber = CurrentBookNumberManager.shared.getCurrentBookNumber()
+        let numberForRequest: UInt64
+        
+        if selectedBookNumber / 20000 == 0 {
+            numberForRequest = UInt64(selectedBookNumber % 10000)
+        } else {
+            numberForRequest = UInt64((selectedBookNumber % 20000) - 7)
+        }
+        
+        APIManager.shared.changeCurrentAPIRequestBookID(UInt64(numberForRequest))
         
         // True -> Already rented
         APIManager.shared.methodForReserve { [weak self] success in
@@ -193,7 +203,13 @@ extension DetailBookViewController {
         if originalList.count >= 0 && (originalList.count + reservationList.count) < 5 {
             print("originalList + ReservationList is not full")
             let selectedBookNumber = CurrentBookNumberManager.shared.getCurrentBookNumber()
-            let numberForRequest = UInt64(selectedBookNumber % 10000)
+            let numberForRequest: UInt64
+            
+            if selectedBookNumber / 20000 == 0 {
+                numberForRequest = UInt64(selectedBookNumber % 10000)
+            } else {
+                numberForRequest = UInt64((selectedBookNumber % 20000) - 7)
+            }
             
             APIManager.shared.changeCurrentAPIRequestBookID(numberForRequest)
             
@@ -236,6 +252,7 @@ extension DetailBookViewController {
                             CurrentBookNumberManager.shared.writeNextWillBorrowList(newList)
                             self.configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
                             MyViewController.shared.reloadButtons()
+                            self.checkRentUserAndChangeStatus()
                             self.onDismiss?()
                             activityIndicator.stopAnimating()
                             loadingView.removeFromSuperview()
@@ -273,13 +290,20 @@ extension DetailBookViewController {
         self.view.addSubview(loadingView)
         
         let selectedBookNumber = CurrentBookNumberManager.shared.getCurrentBookNumber()
-        let numberForRequest = UInt64(selectedBookNumber % 10000)
+        let numberForRequest: UInt64
+        
+        if selectedBookNumber / 20000 == 0 {
+            numberForRequest = UInt64(selectedBookNumber % 10000)
+        } else {
+            numberForRequest = UInt64((selectedBookNumber % 20000) - 7)
+        }
         
         APIManager.shared.changeCurrentAPIRequestBookID(numberForRequest)
         
         APIManager.shared.returnBook { success in
             DispatchQueue.main.async {
                 if success {
+                    print("Return response -->> \(success)")
                     var borrowedList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
                     let removeId = CurrentBookNumberManager.shared.getCurrentBookNumber()
                     print("removeId: \(removeId)")
@@ -299,7 +323,7 @@ extension DetailBookViewController {
                 } else {
                     activityIndicator.stopAnimating()
                     loadingView.removeFromSuperview()
-                    print("APIManager.shared.rentOrReserve -->> Reservation side error occured")
+                    print("APIManager.shared.return -->> Return side error occured")
                     let errorAlert = UIAlertController(title: "오류 발생", message: "관리자에게 문의하세요", preferredStyle: .alert)
                     errorAlert.addAction(UIAlertAction(title: "확인", style: .default))
                     self.present(errorAlert, animated: true, completion: nil)
@@ -353,11 +377,25 @@ extension DetailBookViewController {
     func checkRentUserAndChangeStatus() {
         let myId = APIManager.shared.getMyId()
         
-        Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
+        checkStatusTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { timer in
             APIManager.shared.checkReservationUser { userId in
+                let reservationBookList = CurrentBookNumberManager.shared.getNextWillBorrowList()
+                let firstBookId = reservationBookList[0]
+                let numberForRequest: UInt64
+                
+                if firstBookId / 20000 == 0 {
+                    numberForRequest = UInt64(firstBookId % 10000)
+                } else {
+                    numberForRequest = UInt64((firstBookId % 20000) - 7)
+                }
+                
+                APIManager.shared.changeCheckRentBookID(UInt64(numberForRequest))
+                
                 DispatchQueue.main.async {
                     if userId == myId {
                         self.changeBookToRent()
+                        self.checkStatusTimer?.invalidate()
+                        self.checkStatusTimer = nil
                     }
                 }
             }
@@ -366,7 +404,7 @@ extension DetailBookViewController {
     
     func changeBookToRent() {
         let originalList = CurrentBookNumberManager.shared.getCurrentBorrowedList()
-        let reservationBookList = CurrentBookNumberManager.shared.getNextWillBorrowList()
+        var reservationBookList = CurrentBookNumberManager.shared.getNextWillBorrowList()
         let firstBookId = reservationBookList[0]
         var newList: [Int] = []
         
@@ -377,8 +415,14 @@ extension DetailBookViewController {
         print("Selected book's current status: \(AllBookList.shared.allBookList[selectedBookIndex ?? 0].currentStatus)")
         newList.append(AllBookList.shared.allBookList[selectedBookIndex ?? 0].bookId)
         print("NewList: \(newList)")
+        reservationBookList.removeAll()
+        print("ReservationBookList --> \(reservationBookList)")
         CurrentBookNumberManager.shared.writeCurrentBorrowedList(newList)
         MyViewController.shared.reloadButtons()
+        self.configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
+        
+        let newReservationList: [Int] = []
+        CurrentBookNumberManager.shared.writeNextWillBorrowList(newReservationList)
         self.configureBorrowButton(CurrentBookNumberManager.shared.getCurrentBookStatus())
         print("------------------------------------------------------------")
         MyViewController.shared.reloadButtons()

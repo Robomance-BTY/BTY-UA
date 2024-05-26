@@ -148,8 +148,8 @@ class APIManager {
     }
     
     struct RentOrReserve: Codable {
-        let messageString: UInt64
-        let locationInfo: UInt64
+        let message: String
+        let locationInfo: String
     }
 
     public func rentOrReserve(completion: @escaping((Int) -> Void)) {
@@ -183,9 +183,11 @@ class APIManager {
                         let rentOrReserveResponse = try decoder.decode(RentOrReserve.self, from: data)
                         print(rentOrReserveResponse)
                         
-                        
-                        
-                        completion(1)
+                        if rentOrReserveResponse.message == "책이 성공적으로 대여되었습니다." {
+                            completion(1)
+                        } else if rentOrReserveResponse.message == "책이 이미 대여 중이므로 예약되었습니다. 예약된 책이 반납되어 배송됩니다." {
+                            completion(2)
+                        }
                     } catch {
                         print("RentOrReserve decoder error")
                         print(error)
@@ -210,12 +212,13 @@ class APIManager {
     }
     
     struct ReturnBook: Codable {
-        let usedId: Int
-        let locationInfo: String
+        let message: String
+        let userId: UInt64
     }
 
     public func returnBook(completion: @escaping((Bool) -> Void)) {
         let parameters = [
+            "userId":currentId,
             "bookId":currentBookId
         ]
         guard let postData = try? JSONSerialization.data(withJSONObject: parameters, options: []) else {
@@ -240,6 +243,7 @@ class APIManager {
                 switch httpResponse.statusCode {
                 case 200:
                     do {
+                        print("Before decoding")
                         let decoder = JSONDecoder()
                         let returnBook = try decoder.decode(ReturnBook.self, from: data)
                         print(returnBook)
@@ -559,7 +563,7 @@ class APIManager {
             return
         }
 
-        var request = URLRequest(url: URL(string: "192.168.1.235:8082/application/api/users-by-book")!,timeoutInterval: Double.infinity)
+        var request = URLRequest(url: URL(string: "http://192.168.1.235:8082/application/api/users-by-book")!,timeoutInterval: Double.infinity)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
         request.httpMethod = "POST"

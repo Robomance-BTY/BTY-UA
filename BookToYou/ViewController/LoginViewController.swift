@@ -78,7 +78,7 @@ extension LoginViewController {
 
 extension LoginViewController {
     @objc private func loginButtonClicked() {
-        guard let loginCode = loginTextField.text, loginCode == "1" else {
+        guard let loginCode = loginTextField.text, loginCode == "0101" else {
             let notCorrectLoginIDAlert = UIAlertController(title: "코드가 틀립니다", message: "지정된 코드가 아닙니다.\n다시 입력해주세요", preferredStyle: .alert)
             notCorrectLoginIDAlert.addAction(UIAlertAction(title: "확인", style: .default))
             self.present(notCorrectLoginIDAlert, animated: true, completion: nil)
@@ -88,7 +88,7 @@ extension LoginViewController {
         let loadingView = UIView(frame: self.view.bounds)
         loadingView.backgroundColor = UIColor(white: 0, alpha: 0.6)
         loadingView.isUserInteractionEnabled = true
-        
+         
         let activityIndicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 50, height: 50), type: .ballPulse, color: .white, padding: nil)
         activityIndicator.center = loadingView.center
         loadingView.addSubview(activityIndicator)

@@ -26,6 +26,7 @@ class CurrentBookNumberManager {
     private let oneSeoncdList = Array(10037...10052)
     private let attackOnTitanList = Array(20001...20034)
     private let curseTurnList = Array(20035...20059)
+    private let ghostsCutList = Array(20060...20065)
     
     private var number = Int()
     private var series = Int()
@@ -71,6 +72,8 @@ class CurrentBookNumberManager {
             series = 5
         } else if curseTurnList.contains(toFindNumber) {
             series = 6
+        } else if ghostsCutList.contains(toFindNumber) {
+            series = 7
         }
     }
     
@@ -90,6 +93,8 @@ class CurrentBookNumberManager {
             return attackOnTitanList
         case 6:
             return curseTurnList
+        case 7:
+            return ghostsCutList
         default:
             fatalError()
         }

@@ -92,7 +92,7 @@ extension DetailBookView {
         bookDescription.textColor = .black
         bookDescription.font = UIFont.systemFont(ofSize: 17)
         bookDescription.textAlignment = .left
-        bookDescription.numberOfLines = 8
+        bookDescription.numberOfLines = 5
 
         
         setComponents()

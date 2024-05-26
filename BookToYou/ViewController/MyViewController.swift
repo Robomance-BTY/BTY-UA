@@ -321,6 +321,13 @@ extension MyViewController {
             fatalError("ReloadButton(): nextWillBookList error")
         }
     }
+    
+    func removeReservationButtonImage() {
+        let normalIconName = "plusicon"
+        myView.willBorrowImageView1.image = UIImage(named: normalIconName)
+        myView.willBorrowImageView2.image = UIImage(named: normalIconName)
+        myView.willBorrowImageView3.image = UIImage(named: normalIconName)
+    }
 }
 
 extension MyViewController: UINavigationControllerDelegate {
